@@ -1,0 +1,110 @@
+body {
+    background-image: url("https://img.freepik.com/premium-photo/abstract-digital-communication_34629-318.jpg");
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  input {
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  .logout-button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 10px 0;
+    width: 100%; /* Make the button take full width */
+  }
+  
+  .logout-button:hover {
+    background-color: #c82333;
+  }
+  
+  .book-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .book-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .booked-slots {
+    margin-top: 50px;
+  }
+  
+  .slot-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .slot-list li {
+    font-size: 18px;
+    margin-bottom: 10px;
+    background-color: #ffffff94;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .slot-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(226, 218, 218);
+  }
+  
+  .slot-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cancel-button {
+    margin-left: 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 5px 10px;
+  }
+  
+  .cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  
+  @media (min-width: 768px) {
+    .logout-button {
+      padding: 10px 25px;
+      margin-left: auto; 
+      width: auto; 
+    }
+  }
+  
+  
