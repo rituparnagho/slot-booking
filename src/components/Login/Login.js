@@ -11,7 +11,7 @@ const Login = () => {
     password: "",
   });
 
-  let user_record = new Array();
+  let user_record = [];
   const getdata = (e) => {
     const { value, name } = e.target;
     const validationErrors = { ...errors };
@@ -60,12 +60,7 @@ const Login = () => {
     if (foundUser) {
       if (foundUser.password === password) {
         Swal.fire("Login successful");
-        // alert("Login successful");
-        let currentUser = user_record.filter((v) => {
-          return v.email === email && v.password === password;
-        })[0];
         localStorage.setItem("name", foundUser.name);
-        localStorage.setItem("email", foundUser.email);
         navigate("/slotbook");
       } else {
         Swal.fire("invalid password");

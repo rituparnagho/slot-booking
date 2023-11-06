@@ -21,20 +21,8 @@ const SlotBooking = () => {
   }, []);
 
   const handleDateChange = (date) => {
-    const selectedDateTime = new Date(date + 'T' + selectedTime);
-    const currentDateTime = new Date();
-  
     if (date >= today) {
       setSelectedDate(date);
-  
-      if (date === today && selectedDateTime <= currentDateTime) {
-        setSelectedTime(null);
-      }
-    } else {
-      setSelectedDate(null);
-      setSelectedTime(null);
-      Swal.fire("Please select a date that is not in the past");
-      // alert('Please select a date that is not in the past.');
     }
   };
   
@@ -67,7 +55,6 @@ const SlotBooking = () => {
   
       if (isSlotAlreadyBooked) {
         Swal.fire("This slot is already booked");
-        // alert('This slot is already booked.');
       } else {
         setBookedSlots([...bookedSlots, slot]);
         localStorage.setItem("bookedSlotsAll", JSON.stringify([...bookedSlots, slot]));
@@ -77,7 +64,6 @@ const SlotBooking = () => {
       }
     } else {
       Swal.fire("Please select a date and time");
-      // alert('Please select a date and time.');
     }
   };
   
@@ -106,9 +92,9 @@ const SlotBooking = () => {
   return (
     <div className="container">
       {loggedInUser ? (
-        <div>
-          <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-          <h1>Welcome, {loggedInUser}!</h1>
+        <div className='main'> 
+          <div className='navbar'>
+          <h1 style={{color: "#0056b3"}}>Welcome, {loggedInUser}!</h1>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
           </div>
           
@@ -133,13 +119,13 @@ const SlotBooking = () => {
             />
           </div>) }
           <button className="book-button" onClick={handleBookSlot}>Book Slot</button>
-          <div className='booked-slots'>{bookedSlots.length > 0 && <h2>Booked Slots</h2>}</div>
+          <div className='booked-slots'>{bookedSlots.length > 0 && <h2 style={{color: "#0056b3"}}>Booked Slots</h2>}</div>
           
           <ul className="slot-list">
             {bookedSlots.map((slot, index) => (
               <li key={index}>
                 <div className="slot-info">
-                  <div>
+                  <div  className="date-time-info">
                     <strong>Date:</strong> {slot.date}, <strong>Time:</strong> {slot.time}
                   </div>
                   <div className="slot-actions">
