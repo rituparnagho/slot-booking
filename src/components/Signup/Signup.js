@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import bcrypt from 'bcryptjs'
+
+const salt = bcrypt.genSaltSync(10)
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -73,6 +76,7 @@ const Signup = () => {
     // console.log("new", newData);
     // setData(newData);
     const { name, email, password, confirmPassword } = inpval;
+    const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u')
 
     user_records = JSON.parse(localStorage.getItem("users"))
       ? JSON.parse(localStorage.getItem("users"))
@@ -95,8 +99,8 @@ const Signup = () => {
       user_records.push({
         name: name,
         email: email,
-        password: password,
-        confirmPassword: confirmPassword,
+        password: hashedPassword,
+        // confirmPassword: confirmPassword,
       });
       const foundUser = user_records.find((v) => v.email === email);
 

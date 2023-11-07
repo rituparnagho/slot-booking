@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import Swal from "sweetalert2";
+import bcrypt from 'bcryptjs'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const Login = () => {
 
     const foundUser = user_record.find((v) => v.email === email);
     if (foundUser) {
-      if (foundUser.password === password) {
+      if (bcrypt.compareSync(password, foundUser.password))  {
         Swal.fire("Login successful");
         localStorage.setItem("name", foundUser.name);
         navigate("/slotbook");
