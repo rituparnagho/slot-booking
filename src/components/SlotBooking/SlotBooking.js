@@ -59,6 +59,9 @@ const SlotBooking = () => {
   };
 
   const handleBookSlot = () => {
+    console.log("Selected Date:", selectedDate);
+  console.log("Selected Start Time:", selectedStartTime);
+  console.log("Selected End Time:", selectedEndTime);
     if (selectedDate && selectedStartTime && selectedEndTime) {
       const slot = {
         date: selectedDate,
@@ -82,9 +85,11 @@ const SlotBooking = () => {
           "bookedSlotsAll",
           JSON.stringify([...bookedSlots, slot])
         );
+        console.log("start")
         setSelectedDate(null);
         setSelectedStartTime(null);
         setSelectedEndTime(null);
+        console.log("end")
         Swal.fire("Slot booked successfully");
       }
     } else {
@@ -127,12 +132,13 @@ const SlotBooking = () => {
               Logout
             </button>
           </div>
+          <div><h2 style={{fontSize:"30px", color: "#6f8194"}}>Conference Room Booking Application</h2></div>
 
           <div className="input-group">
             <label>Select Date:</label>
             <input
               type="date"
-              value={selectedDate}
+              value={selectedDate || ""}
               onChange={(e) => handleDateChange(e.target.value)}
               min={today}
               required
@@ -143,7 +149,7 @@ const SlotBooking = () => {
               <label>Select Start Time:</label>
               <input
                 type="time"
-                value={selectedStartTime}
+                value={selectedStartTime || ""}
                 onChange={(e) => handleStartTimeChange(e.target.value)}
                 min={selectedDate === today ? currentTime : null}
               />
@@ -154,7 +160,7 @@ const SlotBooking = () => {
               <label>Select End Time:</label>
               <input
                 type="time"
-                value={selectedEndTime}
+                value={selectedEndTime || ""}
                 onChange={(e) => handleEndTimeChange(e.target.value)}
                 min={selectedDate === today ? selectedStartTime : null}
               />
