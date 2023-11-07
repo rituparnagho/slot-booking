@@ -33,7 +33,7 @@ const Login = () => {
       if (value.length < 6) {
         validationErrors.password = "Password must be at least 6 characters";
       } else if (!passwordRegex.test(value)) {
-        validationErrors.password = "Password is not valid";
+        validationErrors.password = "Password should be 6 character long,password should contain at least one uppercase letter, one lowercase letter, and one number, and one special character";
       } else {
         delete validationErrors.password;
       }
@@ -106,7 +106,7 @@ const Login = () => {
           <br />
           <div>
             <p>
-              Don't have account? <Link to="/signup"> Register</Link>
+              Don't have account? <Link to="/signup">Register</Link>
             </p>
           </div>
         </form>
