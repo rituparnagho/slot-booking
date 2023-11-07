@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 const SlotBooking = () => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedStartTime, setSelectedStartTime] = useState(null);
+  const [selectedEndTime, setSelectedEndTime] = useState(null);
   const [bookedSlots, setBookedSlots] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(
     localStorage.getItem("name")
@@ -28,31 +29,49 @@ const SlotBooking = () => {
     }
   };
 
-  const handleTimeChange = (time) => {
+  const handleStartTimeChange = (time) => {
     const selectedDateTime = new Date(selectedDate + "T" + time);
     const currentDateTime = new Date();
 
     if (selectedDate === today && selectedDateTime <= currentDateTime) {
-      setSelectedTime(null);
+      setSelectedStartTime(null);
       Swal.fire("Please select a time that is not in the past");
       // alert('Please select a time that is not in the past.');
     } else {
-      setSelectedTime(time);
+      setSelectedStartTime(time);
+    }
+  };
+
+  const handleEndTimeChange = (time) => {
+    const startDateTime = new Date(selectedDate + "T" + selectedStartTime);
+    const endDateTime = new Date(selectedDate + "T" + time);
+
+    const timeDifferenceInMinutes = (endDateTime - startDateTime) / (1000 * 60);
+
+    if (timeDifferenceInMinutes >= 120) {
+      // 120 minutes = 2 hours
+      setSelectedEndTime(time);
+    } else {
+      Swal.fire(
+        "The minimum time difference between start and end time is 2 hours"
+      );
     }
   };
 
   const handleBookSlot = () => {
-    if (selectedDate && selectedTime) {
+    if (selectedDate && selectedStartTime && selectedEndTime) {
       const slot = {
         date: selectedDate,
-        time: selectedTime,
+        startTime: selectedStartTime,
+        endTime: selectedEndTime,
         user: loggedInUser,
       };
 
       const isSlotAlreadyBooked = bookedSlots.some(
         (existingSlot) =>
           existingSlot.date === selectedDate &&
-          existingSlot.time === selectedTime
+          existingSlot.startTime === selectedStartTime &&
+          existingSlot.endTime === selectedEndTime
       );
 
       if (isSlotAlreadyBooked) {
@@ -63,15 +82,13 @@ const SlotBooking = () => {
           "bookedSlotsAll",
           JSON.stringify([...bookedSlots, slot])
         );
-        console.log("Before reset:", selectedDate, selectedTime);
         setSelectedDate(null);
-        setSelectedTime(null);
-        console.log("After reset:", selectedDate, selectedTime);
-        
+        setSelectedStartTime(null);
+        setSelectedEndTime(null);
         Swal.fire("Slot booked successfully");
       }
     } else {
-      Swal.fire("Please select a date and time");
+      Swal.fire("Please select a date, start time, and end time");
     }
   };
 
@@ -123,12 +140,23 @@ const SlotBooking = () => {
           </div>
           {selectedDate && (
             <div className="input-group">
-              <label>Select Time:</label>
+              <label>Select Start Time:</label>
               <input
                 type="time"
-                value={selectedTime}
-                onChange={(e) => handleTimeChange(e.target.value)}
+                value={selectedStartTime}
+                onChange={(e) => handleStartTimeChange(e.target.value)}
                 min={selectedDate === today ? currentTime : null}
+              />
+            </div>
+          )}
+          {selectedDate && selectedStartTime && (
+            <div className="input-group">
+              <label>Select End Time:</label>
+              <input
+                type="time"
+                value={selectedEndTime}
+                onChange={(e) => handleEndTimeChange(e.target.value)}
+                min={selectedDate === today ? selectedStartTime : null}
               />
             </div>
           )}
@@ -146,8 +174,9 @@ const SlotBooking = () => {
               <li key={index}>
                 <div className="slot-info">
                   <div className="date-time-info">
-                    <strong>Date:</strong> {slot.date}, <strong>Time:</strong>{" "}
-                    {slot.time}
+                    <strong>Date:</strong> {slot.date},{" "}
+                    <strong>Start Time:</strong> {slot.startTime},{" "}
+                    <strong>End Time:</strong> {slot.endTime},{" "}
                   </div>
                   <div className="slot-actions">
                     {slot.user === loggedInUser && (
